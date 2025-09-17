@@ -239,7 +239,7 @@ def main():
             st.warning("Logo image not found or unable to display.")
         st.markdown("""
         <div style="text-align:center;margin-top:1.7rem; margin-bottom:0.2rem;">
-            <h2 style="color: #0a4635; font-family: 'Inter', sans-serif; font-size: 2.25rem; font-weight:900; letter-spacing:0.06em; margin-bottom: 0.42rem; max-width:1400px; margin-left:auto; margin-right:auto; white-space:nowrap;overflow-x:auto;">
+            <h2 style="color: #0a4635; font-family: 'Inter', sans-serif; font-size: 2.0rem; font-weight:900; letter-spacing:0.06em; margin-bottom: 0.42rem; max-width:1400px; margin-left:auto; margin-right:auto; white-space:nowrap;overflow-x:auto;">
                 Welcome to Sunsure Energy ESG&nbsp;Dashboard
             </h2>
             <p style="font-size: 1.2rem; color: #111111; font-weight:600; max-width:1280px; margin: 0 auto 2.1rem auto; line-height: 1.7;">
@@ -373,3 +373,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
