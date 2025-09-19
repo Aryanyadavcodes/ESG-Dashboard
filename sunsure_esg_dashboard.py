@@ -488,7 +488,7 @@ def render_site_dashboard(site_name, site_category):
             ''', unsafe_allow_html=True
         )
     
-        st.markdown(
+    st.markdown(
             '''
             <div class="risk-category-item risk-high" style="opacity: 0.3;">
                 <strong style="color: #dc3545;">High Risk: 0</strong>
@@ -721,5 +721,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
