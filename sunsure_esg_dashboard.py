@@ -471,6 +471,15 @@ def render_site_dashboard(site_name, site_category):
     # Show Before/After side by side with Streamlit columns
     col_before, col_arrow, col_after = st.columns([5,1,5])
     
+    with col_before:
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h4 style="color: #0a4635; margin-bottom: 1rem;">Before Mitigation</h4>
+            </div>
+            """, unsafe_allow_html=True
+        )
+    
     st.markdown(
             '''
             <div class="risk-category-item risk-high">
@@ -486,6 +495,18 @@ def render_site_dashboard(site_name, site_category):
                 <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Equipment Safety, Documentation, Minor Compliance Issues</p>
             </div>
             ''', unsafe_allow_html=True
+        )
+
+    with col_arrow:
+        st.markdown('<div style="text-align:center; font-size:2.5rem; margin-top: 3rem; color:#0a4635;">➡️</div>', unsafe_allow_html=True)
+    
+    with col_after:
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h4 style="color: #0a4635; margin-bottom: 1rem;">After Mitigation</h4>
+            </div>
+            """, unsafe_allow_html=True
         )
     
     st.markdown(
