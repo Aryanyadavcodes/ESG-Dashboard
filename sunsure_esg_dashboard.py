@@ -593,7 +593,7 @@ def render_site_dashboard(site_name, site_category):
     
     st.markdown("<h4 style='margin-bottom:1.5rem;'>Category-wise Grievances Summary</h4>", unsafe_allow_html=True)
 
-cat_grievances = [
+    cat_grievances = [
     {
         "Category": "Employees",
         "Color": "#003865",
@@ -620,8 +620,8 @@ cat_grievances = [
     },
 ]
 
-cols = st.columns(3)
-for i, info in enumerate(cat_grievances):
+    cols = st.columns(3)
+    for i, info in enumerate(cat_grievances):
     cols[i].markdown(f"""
     <div class='grievance-metric' style='box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid {info['Color']};margin-bottom:1rem;'>
         <h3 style='color:{info['Color']};margin-bottom:0.5rem;'>{info['Category']}</h3>
@@ -780,6 +780,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
