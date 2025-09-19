@@ -623,7 +623,7 @@ def render_site_dashboard(site_name, site_category):
     cols = st.columns(3)
     for i, info in enumerate(cat_grievances):
       cols[i].markdown(f"""
-      <div class='grievance-metric' style='box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid {info['Color']};margin-bottom:1rem;'>
+      <div class='grievance-metric' style='background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid {info['Color']};margin-bottom:1rem;'>
         <h3 style='color:{info['Color']};margin-bottom:0.5rem;'>{info['Category']}</h3>
         <p style='margin:0.15rem 0;font-size:1.15rem;'><b>Total:</b> {info['Total']}</p>
         <p style='margin:0.10rem 0;color:#198754;font-weight:600;'><b>Resolved:</b> {info['Resolved']}</p>
@@ -780,6 +780,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
