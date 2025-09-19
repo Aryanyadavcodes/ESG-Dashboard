@@ -610,9 +610,9 @@ cat_grievances = [
 ]
 
 # Calculate totals (NO CURLY BRACES HERE)
-   total_grievances = sum(cat["Total"] for cat in cat_grievances)
-   total_resolved = sum(cat["Resolved"] for cat in cat_grievances)
-   total_pending = sum(cat["Pending"] for cat in cat_grievances)
+total_grievances = sum(cat["Total"] for cat in cat_grievances)
+total_resolved = sum(cat["Resolved"] for cat in cat_grievances)
+total_pending = sum(cat["Pending"] for cat in cat_grievances)
 
 # Display overall summary
    st.markdown("<h4 style='margin-bottom:1rem;'>Overall Summary</h4>", unsafe_allow_html=True)
@@ -802,6 +802,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
