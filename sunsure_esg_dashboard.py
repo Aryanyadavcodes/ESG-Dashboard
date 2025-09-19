@@ -472,14 +472,7 @@ def render_site_dashboard(site_name, site_category):
     col_before, col_arrow, col_after = st.columns([5,1,5])
     
     with col_before:
-        st.markdown(
-            """
-            <div style="text-align: center;">
-                <h4 style="color: #0a4635; margin-bottom: 1rem;">Before Mitigation</h4>
-                <h3 style="color: #666; margin-bottom: 1.2rem;">Total Risks: <span style="color: #fd3a20;">22</span></h3>
-            </div>
-            """, unsafe_allow_html=True
-        )
+        st.markdown("<h4>Before</h4>")
         st.markdown(
             '''
             <div class="risk-category-item risk-high">
@@ -755,5 +748,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
