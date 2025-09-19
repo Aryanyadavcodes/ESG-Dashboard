@@ -475,7 +475,6 @@ def render_site_dashboard(site_name, site_category):
         st.markdown( """
             <div style="text-align: center;">
               <h4>Before Mitigation</h4>
-            <h3 style="color: #666; margin-bottom: 0.2rem;"></h3>
             </div>
             """, unsafe_allow_html=True
         )
@@ -754,6 +753,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
