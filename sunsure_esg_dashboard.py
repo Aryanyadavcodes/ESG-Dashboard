@@ -652,7 +652,7 @@ for i, info in enumerate(cat_grievances):
     </div>
     """, unsafe_allow_html=True)
 
-   st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 
 def render_site_selection(category):
@@ -802,6 +802,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
