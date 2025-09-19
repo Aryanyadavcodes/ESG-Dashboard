@@ -594,9 +594,9 @@ def render_site_dashboard(site_name, site_category):
     st.markdown("<h4 style='margin-bottom:1.5rem;'>Category-wise Grievances Summary</h4>", unsafe_allow_html=True)
 
     cat_grievances = [ 
-    {   total_grievances == sum(cat["Total"] for cat in cat_grievances)
-        total_resolved == sum(cat["Resolved"] for cat in cat_grievances)
-        total_pending == sum(cat["Pending"] for cat in cat_grievances) },
+    {   total_grievances = sum(cat["Total"] for cat in cat_grievances)
+        total_resolved = sum(cat["Resolved"] for cat in cat_grievances)
+        total_pending = sum(cat["Pending"] for cat in cat_grievances) },
     {
         "Category": "Employees",
         "Color": "#003865",
@@ -787,6 +787,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
