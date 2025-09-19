@@ -492,10 +492,6 @@ def render_site_dashboard(site_name, site_category):
     
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # Section 3: E&S Risks Callout (UPDATED - SIMPLIFIED)
-    st.markdown('<div class="site-section">', unsafe_allow_html=True)
-    st.markdown('<h3 class="section-header">⚠️ E&S Risks Callout</h3>', unsafe_allow_html=True)
-    
     # Section 3: E&S Risks Callout (STREAMLIT COLUMNS FOR FORMATTING)
 st.markdown('<div class="site-section">', unsafe_allow_html=True)
 st.markdown('<h3 class="section-header">⚠️ E&S Risks Callout</h3>', unsafe_allow_html=True)
@@ -557,6 +553,36 @@ with col_after:
         </div>
         ''', unsafe_allow_html=True
     )
+
+# Risk Reduction Summary and line graph using px.line with a DataFrame
+risk_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+risk_trend = pd.DataFrame({
+    'Month': risk_months,
+    'High Risk': [3, 3, 2, 1, 0, 0],
+    'Medium Risk': [7, 6, 5, 4, 3, 2],
+    'Low Risk': [12, 13, 15, 17, 19, 20]
+})
+risk_trend_long = risk_trend.melt(id_vars='Month', var_name='Risk Level', value_name='Count')
+
+fig_risk = px.line(
+    risk_trend_long, x='Month', y='Count', color='Risk Level',
+    color_discrete_map={'High Risk': '#dc3545', 'Medium Risk': '#ffc107', 'Low Risk': '#28a745'},
+    title=f"Risk Mitigation Progress - {site_name}",
+    markers=True
+)
+fig_risk.update_traces(line=dict(width=3))
+fig_risk.update_layout(yaxis_title="Number of Risks", xaxis_title="Month")
+st.plotly_chart(fig_risk, use_container_width=True)
+
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric("High Risk Reduction", "100%", delta="-3 risks", delta_color="normal")
+with col2:
+    st.metric("Medium Risk Reduction", "71%", delta="-5 risks", delta_color="normal")
+with col3:
+    st.metric("Low Risk Increase", "67%", delta="+8 risks", delta_color="inverse")
+
+st.markdown('</div>', unsafe_allow_html=True)
     
     # Risk Reduction Summary
     col1, col2, col3 = st.columns(3)
@@ -792,4 +818,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
