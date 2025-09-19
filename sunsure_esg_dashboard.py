@@ -186,34 +186,6 @@ if os.path.exists(img_path):
     .back-button:hover {{
         background: #5a6268;
     }}
-    .risk-summary-card {{
-        background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
-        border: 2px solid #dee2e6;
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        text-align: center;
-    }}
-    .before-after-container {{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin: 2rem 0;
-        padding: 1.5rem;
-        background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
-        border-radius: 15px;
-        border: 2px solid #dee2e6;
-    }}
-    .risk-column {{
-        text-align: center;
-        flex: 1;
-        padding: 1rem;
-    }}
-    .risk-arrow {{
-        font-size: 2rem;
-        color: {SUNSURE_GREEN};
-        margin: 0 1rem;
-    }}
     .risk-category-item {{
         background: #fff;
         border-radius: 8px;
@@ -492,97 +464,67 @@ def render_site_dashboard(site_name, site_category):
     
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # Section 3: E&S Risks Callout (STREAMLIT COLUMNS FOR FORMATTING)
-st.markdown('<div class="site-section">', unsafe_allow_html=True)
-st.markdown('<h3 class="section-header">⚠️ E&S Risks Callout</h3>', unsafe_allow_html=True)
-
-# Show Before/After side by side with Streamlit columns
-col_before, col_arrow, col_after = st.columns([5,1,5])
-
-with col_before:
-    st.markdown(
-        """
-        <div style="text-align: center;">
-            <h4 style="color: #0a4635; margin-bottom: 1rem;">Before Mitigation</h4>
-            <h3 style="color: #666; margin-bottom: 1.2rem;">Total Risks: <span style="color: #fd3a20;">22</span></h3>
-        </div>
-        """, unsafe_allow_html=True
-    )
-    st.markdown(
-        '''
-        <div class="risk-category-item risk-high">
-            <strong style="color: #dc3545;">High Risk: 3</strong>
-            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Soil Erosion, Community Impact, Water Depletion</p>
-        </div>
-        <div class="risk-category-item risk-medium">
-            <strong style="color: #ffc107;">Medium Risk: 7</strong>
-            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Noise Impact, Air Quality, Traffic, Waste Management</p>
-        </div>
-        <div class="risk-category-item risk-low">
-            <strong style="color: #28a745;">Low Risk: 12</strong>
-            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Equipment Safety, Documentation, Minor Compliance Issues</p>
-        </div>
-        ''', unsafe_allow_html=True
-    )
-
-with col_arrow:
-    st.markdown('<div style="text-align:center; font-size:2.5rem; margin-top: 3rem; color:#0a4635;">➡️</div>', unsafe_allow_html=True)
-
-with col_after:
-    st.markdown(
-        """
-        <div style="text-align: center;">
-            <h4 style="color: #0a4635; margin-bottom: 1rem;">After Mitigation</h4>
-            <h3 style="color: #666; margin-bottom: 1.2rem;">Total Risks: <span style="color: #28a745;">22</span></h3>
-        </div>
-        """, unsafe_allow_html=True
-    )
-    st.markdown(
-        '''
-        <div class="risk-category-item risk-high" style="opacity: 0.3;">
-            <strong style="color: #dc3545;">High Risk: 0</strong>
-            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">All high risks successfully mitigated</p>
-        </div>
-        <div class="risk-category-item risk-medium">
-            <strong style="color: #ffc107;">Medium Risk: 2</strong>
-            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Construction Noise, Minor Air Quality Monitoring</p>
-        </div>
-        <div class="risk-category-item risk-low">
-            <strong style="color: #28a745;">Low Risk: 20</strong>
-            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">All other risks reduced to low category</p>
-        </div>
-        ''', unsafe_allow_html=True
-    )
-
-# Risk Reduction Summary and line graph using px.line with a DataFrame
-risk_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-risk_trend = pd.DataFrame({
-    'Month': risk_months,
-    'High Risk': [3, 3, 2, 1, 0, 0],
-    'Medium Risk': [7, 6, 5, 4, 3, 2],
-    'Low Risk': [12, 13, 15, 17, 19, 20]
-})
-risk_trend_long = risk_trend.melt(id_vars='Month', var_name='Risk Level', value_name='Count')
-
-fig_risk = px.line(
-    risk_trend_long, x='Month', y='Count', color='Risk Level',
-    color_discrete_map={'High Risk': '#dc3545', 'Medium Risk': '#ffc107', 'Low Risk': '#28a745'},
-    title=f"Risk Mitigation Progress - {site_name}",
-    markers=True
-)
-fig_risk.update_traces(line=dict(width=3))
-fig_risk.update_layout(yaxis_title="Number of Risks", xaxis_title="Month")
-st.plotly_chart(fig_risk, use_container_width=True)
-
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.metric("High Risk Reduction", "100%", delta="-3 risks", delta_color="normal")
-with col2:
-    st.metric("Medium Risk Reduction", "71%", delta="-5 risks", delta_color="normal")
-with col3:
-    st.metric("Low Risk Increase", "67%", delta="+8 risks", delta_color="inverse")
-
-st.markdown('</div>', unsafe_allow_html=True)
+    # Section 3: E&S Risks Callout
+    st.markdown('<div class="site-section">', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-header">⚠️ E&S Risks Callout</h3>', unsafe_allow_html=True)
+    
+    # Show Before/After side by side with Streamlit columns
+    col_before, col_arrow, col_after = st.columns([5,1,5])
+    
+    with col_before:
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h4 style="color: #0a4635; margin-bottom: 1rem;">Before Mitigation</h4>
+                <h3 style="color: #666; margin-bottom: 1.2rem;">Total Risks: <span style="color: #fd3a20;">22</span></h3>
+            </div>
+            """, unsafe_allow_html=True
+        )
+        st.markdown(
+            '''
+            <div class="risk-category-item risk-high">
+                <strong style="color: #dc3545;">High Risk: 3</strong>
+                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Soil Erosion, Community Impact, Water Depletion</p>
+            </div>
+            <div class="risk-category-item risk-medium">
+                <strong style="color: #ffc107;">Medium Risk: 7</strong>
+                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Noise Impact, Air Quality, Traffic, Waste Management</p>
+            </div>
+            <div class="risk-category-item risk-low">
+                <strong style="color: #28a745;">Low Risk: 12</strong>
+                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Equipment Safety, Documentation, Minor Compliance Issues</p>
+            </div>
+            ''', unsafe_allow_html=True
+        )
+    
+    with col_arrow:
+        st.markdown('<div style="text-align:center; font-size:2.5rem; margin-top: 3rem; color:#0a4635;">➡️</div>', unsafe_allow_html=True)
+    
+    with col_after:
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h4 style="color: #0a4635; margin-bottom: 1rem;">After Mitigation</h4>
+                <h3 style="color: #666; margin-bottom: 1.2rem;">Total Risks: <span style="color: #28a745;">22</span></h3>
+            </div>
+            """, unsafe_allow_html=True
+        )
+        st.markdown(
+            '''
+            <div class="risk-category-item risk-high" style="opacity: 0.3;">
+                <strong style="color: #dc3545;">High Risk: 0</strong>
+                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">All high risks successfully mitigated</p>
+            </div>
+            <div class="risk-category-item risk-medium">
+                <strong style="color: #ffc107;">Medium Risk: 2</strong>
+                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Construction Noise, Minor Air Quality Monitoring</p>
+            </div>
+            <div class="risk-category-item risk-low">
+                <strong style="color: #28a745;">Low Risk: 20</strong>
+                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">All other risks reduced to low category</p>
+            </div>
+            ''', unsafe_allow_html=True
+        )
     
     # Risk Reduction Summary
     col1, col2, col3 = st.columns(3)
@@ -593,20 +535,24 @@ st.markdown('</div>', unsafe_allow_html=True)
     with col3:
         st.metric("Low Risk Increase", "67%", delta="+8 risks", delta_color="inverse")
     
-    # Risk Trend Chart
+    # Risk Trend Chart using proper DataFrame format
     risk_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-    high_risk_trend = [3, 3, 2, 1, 0, 0]
-    medium_risk_trend = [7, 6, 5, 4, 3, 2]
-    low_risk_trend = [12, 13, 15, 17, 19, 20]
+    risk_trend = pd.DataFrame({
+        'Month': risk_months,
+        'High Risk': [3, 3, 2, 1, 0, 0],
+        'Medium Risk': [7, 6, 5, 4, 3, 2],
+        'Low Risk': [12, 13, 15, 17, 19, 20]
+    })
+    risk_trend_long = risk_trend.melt(id_vars='Month', var_name='Risk Level', value_name='Count')
     
-    fig_risk = px.line(title=f"Risk Mitigation Progress - {site_name}")
-    fig_risk.add_scatter(x=risk_months, y=high_risk_trend, mode='lines+markers', 
-                        name='High Risk', line_color='#dc3545', line_width=3)
-    fig_risk.add_scatter(x=risk_months, y=medium_risk_trend, mode='lines+markers', 
-                        name='Medium Risk', line_color='#ffc107', line_width=3)
-    fig_risk.add_scatter(x=risk_months, y=low_risk_trend, mode='lines+markers', 
-                        name='Low Risk', line_color='#28a745', line_width=3)
-    fig_risk.update_layout(xaxis_title="Month", yaxis_title="Number of Risks")
+    fig_risk = px.line(
+        risk_trend_long, x='Month', y='Count', color='Risk Level',
+        color_discrete_map={'High Risk': '#dc3545', 'Medium Risk': '#ffc107', 'Low Risk': '#28a745'},
+        title=f"Risk Mitigation Progress - {site_name}",
+        markers=True
+    )
+    fig_risk.update_traces(line=dict(width=3))
+    fig_risk.update_layout(yaxis_title="Number of Risks", xaxis_title="Month")
     st.plotly_chart(fig_risk, use_container_width=True)
     
     st.markdown('</div>', unsafe_allow_html=True)
@@ -739,7 +685,7 @@ def main():
         </div>
         """, unsafe_allow_html=True)
         
-        # Site category selection - UPDATED WITH LARGER HEADING AND BIGGER BUTTONS
+        # Site category selection
         st.markdown("""
         <div style="text-align:center; margin: 3rem 0;">
             <h2 style="color: #0a4635; margin-bottom: 2.5rem; font-size: 2.2rem; font-weight: 800;">Select Site Category</h2>
@@ -818,5 +764,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
