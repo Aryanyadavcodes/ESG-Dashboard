@@ -6,6 +6,7 @@ import base64
 import os
 import re
 import io
+from datetime import datetime
 
 SUNSURE_GREEN = "#0a4635"
 SUNSURE_RED = "#fd3a20"
@@ -13,7 +14,7 @@ SUNSURE_BLACK = "#111111"
 
 st.set_page_config(
     page_title="Sunsure Energy | ESG Performance Dashboard",
-    page_icon="Logo_Icon_red.png",
+    page_icon="sunsure_icon.png",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -67,26 +68,161 @@ if os.path.exists(img_path):
         color: #444;
         font-weight: 510;
     }}
+    .site-selection-card {{
+        background: #fff;
+        border: 2px solid {SUNSURE_GREEN};
+        border-radius: 15px;
+        box-shadow: 0 3px 12px rgba(10,70,53,0.12);
+        padding: 2rem 1.5rem;
+        margin: 1rem auto;
+        max-width: 800px;
+        text-align: center;
+    }}
+    .site-button {{
+        background: linear-gradient(135deg, {SUNSURE_GREEN} 0%, #2d7a5f 100%);
+        color: white !important;
+        border: none;
+        border-radius: 12px;
+        padding: 0.8rem 1.5rem;
+        margin: 0.5rem;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(10,70,53,0.2);
+    }}
+    .site-button:hover {{
+        background: linear-gradient(135deg, #0d5a42 0%, {SUNSURE_GREEN} 100%);
+        box-shadow: 0 4px 12px rgba(10,70,53,0.3);
+    }}
+    .category-button {{
+        background: linear-gradient(135deg, {SUNSURE_RED} 0%, #ff6b54 100%);
+        color: white !important;
+        border: none;
+        border-radius: 15px;
+        padding: 1.2rem 2rem;
+        margin: 1rem;
+        font-weight: 700;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 15px rgba(253,58,32,0.25);
+        min-width: 200px;
+    }}
+    .category-button:hover {{
+        background: linear-gradient(135deg, #e03426 0%, {SUNSURE_RED} 100%);
+        box-shadow: 0 6px 20px rgba(253,58,32,0.35);
+    }}
+    .site-section {{
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        border: 1px solid #e8e8e8;
+    }}
+    .section-header {{
+        color: {SUNSURE_GREEN};
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid {SUNSURE_GREEN};
+        padding-bottom: 0.5rem;
+    }}
+    .esia-card {{
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px solid #dee2e6;
+        border-radius: 12px;
+        padding: 1.2rem;
+        margin: 1rem 0;
+    }}
+    .consultant-logo-placeholder {{
+        background: #f8f9fa;
+        border: 2px dashed #adb5bd;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        color: #6c757d;
+        font-style: italic;
+    }}
+    .grievance-table {{
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+    }}
+    .grievance-table th, .grievance-table td {{
+        border: 1px solid #dee2e6;
+        padding: 0.8rem;
+        text-align: left;
+    }}
+    .grievance-table th {{
+        background: {SUNSURE_GREEN};
+        color: white;
+        font-weight: 600;
+    }}
+    .approval-card {{
+        background: #fff;
+        border: 1px solid #e8e8e8;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }}
+    .back-button {{
+        background: #6c757d;
+        color: white !important;
+        border: none;
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        margin: 0.5rem;
+        font-weight: 500;
+        cursor: pointer;
+    }}
+    .back-button:hover {{
+        background: #5a6268;
+    }}
     </style>
     """
     st.markdown(page_bg_css, unsafe_allow_html=True)
+
+# Site data structure
+OM_SITES = ["Pailani 1", "Pailani 2", "Pinahat", "Gursarai", "Panwari", "Augasi", "Solapur", "Erandol"]
+CONSTRUCTION_SITES = ["Niwali", "Dhule", "Mau", "Erach", "Illayangudi", "Bikaner IV", "Bikaner III", "Kabrai", "Charkhari", "Jath", "Bijapur", "Mundsar"]
+
+# Session state management
+if 'page' not in st.session_state:
+    st.session_state.page = 'main'
+if 'site_category' not in st.session_state:
+    st.session_state.site_category = None
+if 'selected_site' not in st.session_state:
+    st.session_state.selected_site = None
 
 with st.sidebar:
     st.markdown(f"""
         <div style="background: linear-gradient(135deg, {SUNSURE_RED} 0%, #ff6b54 100%);
                     color: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; text-align: center;">
             <h2 style="margin: 0; font-family: 'Inter', sans-serif;">
+                <img src="sunsure_sidebar_icon.png" style="height:32px;vertical-align:middle;margin-bottom:6px;margin-right:7px;">
                 SUNSURE ENERGY
             </h2>
             <p style="margin: 0.5rem 0 0 0; opacity: 0.9;">ESG Data Upload Portal</p>
         </div>
     """, unsafe_allow_html=True)
+    
+    if st.session_state.page != 'main':
+        if st.button("🏠 Back to Main", key="sidebar_home"):
+            st.session_state.page = 'main'
+            st.session_state.site_category = None
+            st.session_state.selected_site = None
+            st.rerun()
+    
     uploaded_files = st.file_uploader(
         "Upload Site Excel Files",
         type=['xlsx', 'xls'],
         accept_multiple_files=True,
         help="Upload Excel files from Sunsure Energy sites"
     )
+    
     with st.expander("ℹ️ About Sunsure Energy"):
         st.markdown(
             '<a href="https://sunsure-energy.com/" target="_blank" style="color:#fd3a20;font-weight:600;text-decoration:underline;">Visit the official Sunsure Energy website</a>',
@@ -138,6 +274,7 @@ def process_excel_file(uploaded_file, site_name):
                 break
         if main_sheet is None:
             main_sheet = list(excel_data.values())[0]
+        
         state = identify_state(uploaded_file.name)
         capacity = 100
         tech = 'Solar' if 'solar' in uploaded_file.name.lower() else (
@@ -145,11 +282,13 @@ def process_excel_file(uploaded_file, site_name):
         cap_match = re.search(r'(\d+)\s*mwp?', uploaded_file.name.lower())
         if cap_match:
             capacity = int(cap_match.group(1))
+        
         water_total, diesel_total, elec_total, cement_total, ghg_total_s1, ghg_total_s2, ghg_total_s3 = 0,0,0,0,0,0,0
         water_monthly = [0]*12
         diesel_monthly = [0]*12
         elec_monthly = [0]*12
         cement_monthly = [0]*12
+        
         for idx, row in main_sheet.iterrows():
             if len(row) < 4:
                 continue
@@ -173,8 +312,9 @@ def process_excel_file(uploaded_file, site_name):
                 cement_monthly = [c+val for c,val in zip(cement_monthly, v)]
                 cement_total += sum(v)
                 ghg_total_s3 += sum(v)*0.52/1000
+        
         ghg_total = ghg_total_s1 + ghg_total_s2 + ghg_total_s3
-
+        
         return {
             'Site_Name': site_name, 'State': state, 'Capacity_MW': capacity, 'Technology': tech,
             'Water_Total': water_total, 'Diesel_Total': diesel_total,
@@ -201,6 +341,7 @@ def download_buttons(df, state_summary):
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
         df.to_excel(writer, sheet_name='Portfolio_KPIs', index=False)
         state_summary.to_excel(writer, sheet_name='State_Summary', index=False)
+    
     st.download_button(
         label="📊 Download Portfolio Report (Excel)",
         data=output.getvalue(),
@@ -228,15 +369,177 @@ def download_buttons(df, state_summary):
         mime="text/csv"
     )
 
+def render_site_dashboard(site_name, site_category):
+    st.markdown(f"""
+    <div style="text-align:center; margin-bottom:2rem;">
+        <h1 style="color: {SUNSURE_GREEN}; font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem;">
+            {site_name} - {site_category}
+        </h1>
+        <p style="color: #666; font-size: 1.1rem;">Site-Specific ESG Performance Dashboard</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Back navigation
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col1:
+        if st.button("⬅️ Back to Sites", key="back_to_sites"):
+            st.session_state.page = 'site_selection'
+            st.session_state.selected_site = None
+            st.rerun()
+    
+    # Section 1: GHG Data
+    st.markdown('<div class="site-section">', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-header">🌍 GHG Data & Environmental Metrics</h3>', unsafe_allow_html=True)
+    
+    # Demo GHG KPIs for the site
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.markdown(kpi_card_white("Scope 1 Emissions", "12.5", "tCO₂e"), unsafe_allow_html=True)
+    with col2:
+        st.markdown(kpi_card_white("Water Consumption", "45,000", "Litres"), unsafe_allow_html=True)
+    with col3:
+        st.markdown(kpi_card_white("Diesel Usage", "5,200", "Litres"), unsafe_allow_html=True)
+    with col4:
+        st.markdown(kpi_card_white("Clean Energy Gen.", "8,500", "MWh"), unsafe_allow_html=True)
+    
+    # Monthly trends (demo)
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    demo_emissions = [10, 8, 12, 15, 18, 20, 22, 19, 16, 14, 11, 9]
+    
+    fig = px.line(x=months, y=demo_emissions, 
+                  title=f"Monthly GHG Emissions Trend - {site_name}",
+                  labels={'x': 'Month', 'y': 'GHG Emissions (tCO₂e)'},
+                  color_discrete_sequence=[SUNSURE_GREEN])
+    st.plotly_chart(fig, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Section 2: ESIA Study Status
+    st.markdown('<div class="site-section">', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-header">📋 ESIA Study Status</h3>', unsafe_allow_html=True)
+    
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        st.markdown("""
+        <div class="esia-card">
+            <h4 style="color: #0a4635; margin-bottom: 1rem;">Environmental & Social Impact Assessment</h4>
+            <p><strong>Status:</strong> <span style="color: green;">Completed ✓</span></p>
+            <p><strong>Completion Date:</strong> March 15, 2024</p>
+            <p><strong>Next Review:</strong> March 2025</p>
+            <p><strong>Compliance Level:</strong> Fully Compliant</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("📄 Download ESIA Report", key=f"esia_{site_name}"):
+            st.info("ESIA Report download link would be activated here")
+    
+    with col2:
+        st.markdown("""
+        <div class="consultant-logo-placeholder">
+            <p style="margin: 0; font-size: 0.9rem;">ESIA Consultant Logo</p>
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem;">[Logo would appear here]</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Section 3: Regulatory Approvals
+    st.markdown('<div class="site-section">', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-header">📜 Regulatory Approvals</h3>', unsafe_allow_html=True)
+    
+    approvals_data = [
+        {"Document": "Consent to Establish (CTE)", "Issue Date": "Jan 15, 2024", "Valid Until": "Jan 14, 2026", "Status": "Active"},
+        {"Document": "Consent to Operate (CTO)", "Issue Date": "Mar 22, 2024", "Valid Until": "Mar 21, 2027", "Status": "Active"},
+        {"Document": "Intimation Letter", "Issue Date": "Feb 08, 2024", "Valid Until": "N/A", "Status": "Acknowledged"}
+    ]
+    
+    for approval in approvals_data:
+        st.markdown(f"""
+        <div class="approval-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h5 style="margin: 0; color: {SUNSURE_GREEN};">{approval['Document']}</h5>
+                    <p style="margin: 0.2rem 0; color: #666;">Issued: {approval['Issue Date']} | Valid Until: {approval['Valid Until']}</p>
+                </div>
+                <div>
+                    <span style="background: {'green' if approval['Status'] == 'Active' else 'blue'}; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">
+                        {approval['Status']}
+                    </span>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    if st.button("📁 Download All Certificates", key=f"certs_{site_name}"):
+        st.info("All regulatory certificates download would be initiated here")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Section 4: Grievances
+    st.markdown('<div class="site-section">', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-header">📢 Grievances Management</h3>', unsafe_allow_html=True)
+    
+    # Demo grievances data
+    grievances_data = {
+        'Grievance ID': ['GR001', 'GR002', 'GR003'],
+        'Date Received': ['2024-08-15', '2024-09-02', '2024-09-10'],
+        'Issue Type': ['Noise Complaint', 'Dust Generation', 'Water Quality'],
+        'Source': ['Local Resident', 'Farmer', 'Village Head'],
+        'Status': ['Resolved', 'In Progress', 'Under Review'],
+        'Resolution Date': ['2024-08-20', 'Pending', 'Pending']
+    }
+    
+    grievances_df = pd.DataFrame(grievances_data)
+    st.dataframe(grievances_df, use_container_width=True, hide_index=True)
+    
+    # Grievance summary
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("Total Grievances", "3", delta="0 this month")
+    with col2:
+        st.metric("Resolved", "1", delta="+1")
+    with col3:
+        st.metric("Average Resolution Time", "5 days", delta="-2 days")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+
+def render_site_selection(category):
+    sites = OM_SITES if category == "O&M Sites" else CONSTRUCTION_SITES
+    
+    st.markdown(f"""
+    <div class="site-selection-card">
+        <h2 style="color: {SUNSURE_GREEN}; margin-bottom: 2rem;">Select {category}</h2>
+        <p style="color: #666; margin-bottom: 2rem;">Choose a site to view detailed ESG performance dashboard</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Back button
+    if st.button("⬅️ Back to Main Menu", key="back_to_main"):
+        st.session_state.page = 'main'
+        st.session_state.site_category = None
+        st.rerun()
+    
+    # Site buttons in a grid
+    cols = st.columns(4)
+    for i, site in enumerate(sites):
+        with cols[i % 4]:
+            if st.button(site, key=f"site_{site}", help=f"View {site} dashboard"):
+                st.session_state.selected_site = site
+                st.session_state.page = 'site_dashboard'
+                st.rerun()
+
 def main():
-    if not uploaded_files:
+    # Main page - Site category selection
+    if st.session_state.page == 'main':
+        # Logo
         try:
-            logo = Image.open("Sunsure-Energy_Logo-with-tagline.png")
+            logo = Image.open("Sunsure-Energy_Logo-with-tagline.jpg")
             st.markdown('<div style="text-align: center;">', unsafe_allow_html=True)
             st.image(logo, width=320)
             st.markdown('</div>', unsafe_allow_html=True)
         except Exception:
             st.warning("Logo image not found or unable to display.")
+        
+        # Welcome section
         st.markdown("""
         <div style="text-align:center;margin-top:1.7rem; margin-bottom:0.2rem;">
             <h2 style="color: #0a4635; font-family: 'Inter', sans-serif; font-size: 2.0rem; font-weight:900; letter-spacing:0.06em; margin-bottom: 0.42rem; max-width:1400px; margin-left:auto; margin-right:auto; white-space:nowrap;overflow-x:auto;">
@@ -244,10 +547,12 @@ def main():
             </h2>
             <p style="font-size: 1.2rem; color: #111111; font-weight:600; max-width:1280px; margin: 0 auto 2.1rem auto; line-height: 1.7;">
                 Professional ESG performance dashboard for Sunsure Energy's renewable energy&nbsp;portfolio.
-                <br>Upload your site data to generate comprehensive sustainability reports.
+                Upload your site data to generate comprehensive sustainability reports.
             </p>
         </div>
         """, unsafe_allow_html=True)
+        
+        # Feature cards
         st.markdown("""
         <div style="display:flex; gap:1.6rem; justify-content:center; margin-bottom:2.5rem;">
             <div class="feature-card">
@@ -264,112 +569,83 @@ def main():
             </div>
         </div>
         """, unsafe_allow_html=True)
-        return
-
-    st.markdown('<div style="text-align:center; margin-bottom:0.2rem;">', unsafe_allow_html=True)
-    st.success(f"✅ {len(uploaded_files)} file(s) uploaded successfully!")
-    st.markdown("Click the button below to generate your ESG dashboard:")
-    dashboard_trigger = st.button("🚀 Generate Dashboard", key="gen_button")
-    st.markdown('</div>', unsafe_allow_html=True)
-    if not dashboard_trigger:
-        st.stop()
-
-    all_site_kpis = []
-    for file in uploaded_files:
-        site_dict = process_excel_file(file, file.name.replace('.xlsx','').replace('.xls',''))
-        if site_dict:
-            all_site_kpis.append(site_dict)
-    df = pd.DataFrame(all_site_kpis)
-
-    st.subheader("Executive Summary")
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        st.markdown(kpi_card_white("Portfolio Sites", len(df), "Sites"), unsafe_allow_html=True)
-    with col2:
-        st.markdown(kpi_card_white("Total Capacity", f"{df['Capacity_MW'].sum():,.0f}", "MW"), unsafe_allow_html=True)
-    with col3:
-        st.markdown(kpi_card_white("Total Water", f"{df['Water_Total'].sum():,.0f}", "Litres"), unsafe_allow_html=True)
-    with col4:
-        st.markdown(kpi_card_white("Total Diesel", f"{df['Diesel_Total'].sum():,.0f}", "Litres"), unsafe_allow_html=True)
-    with col5:
-        st.markdown(kpi_card_white("Total GHG Emissions", f"{df['GHG_Total'].sum():,.2f}", "tCO₂e"), unsafe_allow_html=True)
-
-    st.subheader("State-wise Performance")
-    state_summary = df.groupby('State').agg({
-        'Capacity_MW': 'sum',
-        'Water_Total': 'sum',
-        'Diesel_Total': 'sum',
-        'GHG_Total': 'sum',
-        'Site_Name': 'count'
-    }).reset_index().rename(columns={'Site_Name': 'Num_Sites'})
-    st.dataframe(state_summary, use_container_width=True, hide_index=True)
-
-    st.subheader("Performance Analytics")
-    months = ['January','February','March','April','May','June','July','August','September','October','November','December']
-
-    st.write("### 💧 Water Supply Consumption")
-    if len(df) == 1:
-        st.info(f"Monthly water supply data for: {df.iloc[0]['Site_Name']}")
-        fig_water = px.bar(
-            x=months, y=df.iloc[0]['Water_Monthly'],
-            labels={'x': 'Month', 'y': 'Water Supply Consumption (Litres)'},
-            title=f"Water Supply Consumption (Monthly) — {df.iloc[0]['Site_Name']}",
-            color_discrete_sequence=[SUNSURE_GREEN],
-        )
-        st.plotly_chart(fig_water, use_container_width=True)
-    else:
-        st.info("Total water supply consumption for each site (cumulative):")
-        fig_water = px.bar(
-            x=df['Site_Name'], y=df['Water_Total'],
-            labels={'x': 'Site', 'y': 'Total Water Supply Consumption (Litres)'},
-            title='Site-wise Cumulative Water Supply Consumption',
-            color_discrete_sequence=[SUNSURE_GREEN]
-        )
-        st.plotly_chart(fig_water, use_container_width=True)
-
-    st.write("### ⛽ Diesel (Fuel) Consumption")
-    if len(df) == 1:
-        st.info(f"Monthly diesel consumption for: {df.iloc[0]['Site_Name']}")
-        fig_diesel = px.bar(
-            x=months, y=df.iloc[0]['Diesel_Monthly'],
-            labels={'x': 'Month', 'y': 'Diesel Consumption (Litres)'},
-            title=f"Diesel Consumption (Monthly) — {df.iloc[0]['Site_Name']}",
-            color_discrete_sequence=[SUNSURE_RED]
-        )
-        st.plotly_chart(fig_diesel, use_container_width=True)
-    else:
-        st.info("Total diesel consumption for each site (cumulative):")
-        fig_diesel = px.bar(
-            x=df['Site_Name'], y=df['Diesel_Total'],
-            labels={'x': 'Site', 'y': 'Total Diesel Consumption (Litres)'},
-            title='Site-wise Cumulative Diesel Consumption',
-            color_discrete_sequence=[SUNSURE_RED]
-        )
-        st.plotly_chart(fig_diesel, use_container_width=True)
-
-    st.write("### 🌍 GHG Emissions (Scope 1 only)")
-    if len(df) == 1:
-        st.info(f"Monthly scope 1 GHG emissions for: {df.iloc[0]['Site_Name']}")
-        scope1 = [x*0.00268 for x in df.iloc[0]['Diesel_Monthly']]
-        fig_ghg = px.bar(
-            x=months, y=scope1,
-            labels={'x':'Month','y':'GHG Emissions Scope 1 (tCO₂e)'},
-            title=f"GHG Emissions Scope 1 - Diesel (Monthly) — {df.iloc[0]['Site_Name']}",
-            color_discrete_sequence=['#00AF9B']
-        )
-        st.plotly_chart(fig_ghg, use_container_width=True)
-    else:
-        st.info("GHG emissions Scope 1 (diesel only) for each site:")
-        fig_ghg = px.bar(
-            x=df['Site_Name'], y=df['GHG_Total_Scope1'],
-            labels={'x': 'Site', 'y': 'GHG Scope 1 Emissions (tCO₂e)'},
-            title='Site-wise Scope 1 (Diesel) GHG Emissions',
-            color_discrete_sequence=['#00AF9B']
-        )
-        st.plotly_chart(fig_ghg, use_container_width=True)
-
-    st.subheader("Export / Download Reports")
-    download_buttons(df, state_summary)
+        
+        # Site category selection
+        st.markdown("""
+        <div style="text-align:center; margin: 3rem 0;">
+            <h3 style="color: #0a4635; margin-bottom: 2rem;">Select Site Category</h3>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            col_a, col_b = st.columns(2)
+            with col_a:
+                if st.button("🔧 O&M Sites", key="om_sites"):
+                    st.session_state.site_category = "O&M Sites"
+                    st.session_state.page = 'site_selection'
+                    st.rerun()
+            
+            with col_b:
+                if st.button("🏗️ Construction Sites", key="construction_sites"):
+                    st.session_state.site_category = "Construction Sites"
+                    st.session_state.page = 'site_selection'
+                    st.rerun()
+        
+        # Portfolio dashboard section (if files uploaded)
+        if uploaded_files:
+            st.markdown('<hr style="margin: 3rem 0;">', unsafe_allow_html=True)
+            
+            st.markdown('<div style="text-align:center; margin-bottom:0.2rem;">', unsafe_allow_html=True)
+            st.success(f"✅ {len(uploaded_files)} file(s) uploaded successfully!")
+            st.markdown("Click the button below to generate your portfolio dashboard:")
+            dashboard_trigger = st.button("🚀 Generate Portfolio Dashboard", key="gen_button")
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+            if dashboard_trigger:
+                # Process files and show portfolio dashboard
+                all_site_kpis = []
+                for file in uploaded_files:
+                    site_dict = process_excel_file(file, file.name.replace('.xlsx','').replace('.xls',''))
+                    if site_dict:
+                        all_site_kpis.append(site_dict)
+                
+                if all_site_kpis:
+                    df = pd.DataFrame(all_site_kpis)
+                    
+                    st.subheader("Portfolio Executive Summary")
+                    col1, col2, col3, col4, col5 = st.columns(5)
+                    with col1:
+                        st.markdown(kpi_card_white("Portfolio Sites", len(df), "Sites"), unsafe_allow_html=True)
+                    with col2:
+                        st.markdown(kpi_card_white("Total Capacity", f"{df['Capacity_MW'].sum():,.0f}", "MW"), unsafe_allow_html=True)
+                    with col3:
+                        st.markdown(kpi_card_white("Total Water", f"{df['Water_Total'].sum():,.0f}", "Litres"), unsafe_allow_html=True)
+                    with col4:
+                        st.markdown(kpi_card_white("Total Diesel", f"{df['Diesel_Total'].sum():,.0f}", "Litres"), unsafe_allow_html=True)
+                    with col5:
+                        st.markdown(kpi_card_white("Total GHG Emissions", f"{df['GHG_Total'].sum():,.2f}", "tCO₂e"), unsafe_allow_html=True)
+                    
+                    st.subheader("State-wise Performance")
+                    state_summary = df.groupby('State').agg({
+                        'Capacity_MW': 'sum',
+                        'Water_Total': 'sum',
+                        'Diesel_Total': 'sum',
+                        'GHG_Total': 'sum',
+                        'Site_Name': 'count'
+                    }).reset_index().rename(columns={'Site_Name': 'Num_Sites'})
+                    st.dataframe(state_summary, use_container_width=True, hide_index=True)
+                    
+                    st.subheader("Export / Download Reports")
+                    download_buttons(df, state_summary)
+    
+    # Site selection page
+    elif st.session_state.page == 'site_selection':
+        render_site_selection(st.session_state.site_category)
+    
+    # Individual site dashboard
+    elif st.session_state.page == 'site_dashboard':
+        render_site_dashboard(st.session_state.selected_site, st.session_state.site_category)
 
 if __name__ == "__main__":
     main()
