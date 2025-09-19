@@ -496,52 +496,67 @@ def render_site_dashboard(site_name, site_category):
     st.markdown('<div class="site-section">', unsafe_allow_html=True)
     st.markdown('<h3 class="section-header">⚠️ E&S Risks Callout</h3>', unsafe_allow_html=True)
     
-    # Before and After Risk Comparison
-    st.markdown("""
-    <div class="before-after-container">
-        <div class="risk-column">
+    # Section 3: E&S Risks Callout (STREAMLIT COLUMNS FOR FORMATTING)
+st.markdown('<div class="site-section">', unsafe_allow_html=True)
+st.markdown('<h3 class="section-header">⚠️ E&S Risks Callout</h3>', unsafe_allow_html=True)
+
+# Show Before/After side by side with Streamlit columns
+col_before, col_arrow, col_after = st.columns([5,1,5])
+
+with col_before:
+    st.markdown(
+        """
+        <div style="text-align: center;">
             <h4 style="color: #0a4635; margin-bottom: 1rem;">Before Mitigation</h4>
-            <div style="margin-bottom: 1rem;">
-                <h3 style="color: #666; margin: 0;">Total Risks: <span style="color: #fd3a20;">22</span></h3>
-            </div>
-            <div class="risk-category-item risk-high">
-                <strong style="color: #dc3545;">High Risk: 3</strong>
-                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Soil Erosion, Community Impact, Water Depletion</p>
-            </div>
-            <div class="risk-category-item risk-medium">
-                <strong style="color: #ffc107;">Medium Risk: 7</strong>
-                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Noise Impact, Air Quality, Traffic, Waste Management</p>
-            </div>
-            <div class="risk-category-item risk-low">
-                <strong style="color: #28a745;">Low Risk: 12</strong>
-                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Equipment Safety, Documentation, Minor Compliance Issues</p>
-            </div>
+            <h3 style="color: #666; margin-bottom: 1.2rem;">Total Risks: <span style="color: #fd3a20;">22</span></h3>
         </div>
-        
-        <div class="risk-arrow">
-            ➡️
+        """, unsafe_allow_html=True
+    )
+    st.markdown(
+        '''
+        <div class="risk-category-item risk-high">
+            <strong style="color: #dc3545;">High Risk: 3</strong>
+            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Soil Erosion, Community Impact, Water Depletion</p>
         </div>
-        
-        <div class="risk-column">
+        <div class="risk-category-item risk-medium">
+            <strong style="color: #ffc107;">Medium Risk: 7</strong>
+            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Noise Impact, Air Quality, Traffic, Waste Management</p>
+        </div>
+        <div class="risk-category-item risk-low">
+            <strong style="color: #28a745;">Low Risk: 12</strong>
+            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Equipment Safety, Documentation, Minor Compliance Issues</p>
+        </div>
+        ''', unsafe_allow_html=True
+    )
+
+with col_arrow:
+    st.markdown('<div style="text-align:center; font-size:2.5rem; margin-top: 3rem; color:#0a4635;">➡️</div>', unsafe_allow_html=True)
+
+with col_after:
+    st.markdown(
+        """
+        <div style="text-align: center;">
             <h4 style="color: #0a4635; margin-bottom: 1rem;">After Mitigation</h4>
-            <div style="margin-bottom: 1rem;">
-                <h3 style="color: #666; margin: 0;">Total Risks: <span style="color: #28a745;">22</span></h3>
-            </div>
-            <div class="risk-category-item risk-high" style="opacity: 0.3;">
-                <strong style="color: #dc3545;">High Risk: 0</strong>
-                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">All high risks successfully mitigated</p>
-            </div>
-            <div class="risk-category-item risk-medium">
-                <strong style="color: #ffc107;">Medium Risk: 2</strong>
-                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Construction Noise, Minor Air Quality Monitoring</p>
-            </div>
-            <div class="risk-category-item risk-low">
-                <strong style="color: #28a745;">Low Risk: 20</strong>
-                <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">All other risks reduced to low category</p>
-            </div>
+            <h3 style="color: #666; margin-bottom: 1.2rem;">Total Risks: <span style="color: #28a745;">22</span></h3>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True
+    )
+    st.markdown(
+        '''
+        <div class="risk-category-item risk-high" style="opacity: 0.3;">
+            <strong style="color: #dc3545;">High Risk: 0</strong>
+            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">All high risks successfully mitigated</p>
+        </div>
+        <div class="risk-category-item risk-medium">
+            <strong style="color: #ffc107;">Medium Risk: 2</strong>
+            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">Construction Noise, Minor Air Quality Monitoring</p>
+        </div>
+        <div class="risk-category-item risk-low">
+            <strong style="color: #28a745;">Low Risk: 20</strong>
+            <p style="margin: 0.3rem 0 0 0; font-size: 0.9rem;">All other risks reduced to low category</p>
+        </div>
+        ''', unsafe_allow_html=True
+    )
     
     # Risk Reduction Summary
     col1, col2, col3 = st.columns(3)
@@ -777,3 +792,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
