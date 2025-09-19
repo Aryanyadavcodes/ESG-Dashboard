@@ -616,32 +616,32 @@ total_pending = sum(cat["Pending"] for cat in cat_grievances)
 
 # Display overall summary
 st.markdown("<h4 style='margin-bottom:1rem;'>Overall Summary</h4>", unsafe_allow_html=True)
-   s1, s2, s3 = st.columns(3)
-   s1.markdown(f"""
-   <div class='grievance-metric' style='background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid #003865;'>
-    <h4 style='color:#003865;margin-bottom:0.5rem;'>Total Grievances</h4>
-    <h2 style='color:#003865;margin:0;'>{total_grievances}</h2>
+s1, s2, s3 = st.columns(3)
+s1.markdown(f"""
+<div class='grievance-metric' style='background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid #003865;'>
+<h4 style='color:#003865;margin-bottom:0.5rem;'>Total Grievances</h4>
+<h2 style='color:#003865;margin:0;'>{total_grievances}</h2>
 </div>
 """, unsafe_allow_html=True)
 
-   s2.markdown(f"""
-   <div class='grievance-metric' style='background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid #198754;'>
-    <h4 style='color:#198754;margin-bottom:0.5rem;'>Total Resolved</h4>
-    <h2 style='color:#198754;margin:0;'>{total_resolved}</h2>
+s2.markdown(f"""
+<div class='grievance-metric' style='background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid #198754;'>
+<h4 style='color:#198754;margin-bottom:0.5rem;'>Total Resolved</h4>
+<h2 style='color:#198754;margin:0;'>{total_resolved}</h2>
 </div>
 """, unsafe_allow_html=True)
 
-   s3.markdown(f"""
+s3.markdown(f"""
 <div class='grievance-metric' style='background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid #fd7e14;'>
-    <h4 style='color:#fd7e14;margin-bottom:0.5rem;'>Total Pending</h4>
-    <h2 style='color:#fd7e14;margin:0;'>{total_pending}</h2>
+<h4 style='color:#fd7e14;margin-bottom:0.5rem;'>Total Pending</h4>
+<h2 style='color:#fd7e14;margin:0;'>{total_pending}</h2>
 </div>
 """, unsafe_allow_html=True)
 
 # Display category-wise breakdown
 st.markdown("<h4 style='margin-top:2rem;margin-bottom:1.5rem;'>Category-wise Breakdown</h4>", unsafe_allow_html=True)
-   cols = st.columns(3)
-   for i, info in enumerate(cat_grievances):
+cols = st.columns(3)
+for i, info in enumerate(cat_grievances):
      cols[i].markdown(f"""
      <div class='grievance-metric' style='background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid {info['Color']};margin-bottom:1rem;'>
         <h3 style='color:{info['Color']};margin-bottom:0.5rem;'>{info['Category']}</h3>
@@ -802,6 +802,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
