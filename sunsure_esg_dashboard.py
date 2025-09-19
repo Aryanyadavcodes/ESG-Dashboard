@@ -476,6 +476,7 @@ def render_site_dashboard(site_name, site_category):
             """
             <div style="text-align: center;">
                 <h4 style="color: #0a4635; margin-bottom: 1rem;">Before Mitigation</h4>
+                <h3 style="color: #666; margin-bottom: 1.2rem;">Total Risks: <span style="color: #fd3a20;">22</span></h3>
             </div>
             """, unsafe_allow_html=True
         )
@@ -505,6 +506,7 @@ def render_site_dashboard(site_name, site_category):
             """
             <div style="text-align: center;">
                 <h4 style="color: #0a4635; margin-bottom: 1rem;">After Mitigation</h4>
+                <h3 style="color: #666; margin-bottom: 1.2rem;">Total Risks: <span style="color: #28a745;">22</span></h3>
             </div>
             """, unsafe_allow_html=True
         )
@@ -742,6 +744,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
