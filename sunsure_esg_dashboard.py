@@ -543,18 +543,9 @@ def render_site_dashboard(site_name, site_category):
         'Medium Risk': [7, 6, 5, 4, 3, 2],
         'Low Risk': [12, 13, 15, 17, 19, 20]
     })
-    risk_trend_long = risk_trend.melt(id_vars='Month', var_name='Risk Level', value_name='Count')
-    
-    fig_risk = px.line(
-        risk_trend_long, x='Month', y='Count', color='Risk Level',
-        color_discrete_map={'High Risk': '#dc3545', 'Medium Risk': '#ffc107', 'Low Risk': '#28a745'},
-        title=f"Risk Mitigation Progress - {site_name}",
-        markers=True
-    )
-    fig_risk.update_traces(line=dict(width=3))
-    fig_risk.update_layout(yaxis_title="Number of Risks", xaxis_title="Month")
-    st.plotly_chart(fig_risk, use_container_width=True)
-    
+    if st.button("📑 View E&S Risk Register"):
+    st.info("Here you can display or download the E&S Risk Register file, table, or link (functionality to be added).")
+
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Section 4: Regulatory Approvals
@@ -764,3 +755,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
