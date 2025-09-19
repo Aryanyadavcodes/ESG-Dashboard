@@ -99,19 +99,24 @@ if os.path.exists(img_path):
         background: linear-gradient(135deg, {SUNSURE_RED} 0%, #ff6b54 100%);
         color: white !important;
         border: none;
-        border-radius: 15px;
-        padding: 1.2rem 2rem;
+        border-radius: 18px;
+        padding: 1.8rem 2.5rem;
         margin: 1rem;
         font-weight: 700;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 3px 15px rgba(253,58,32,0.25);
-        min-width: 200px;
+        box-shadow: 0 4px 18px rgba(253,58,32,0.25);
+        min-width: 280px;
+        min-height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }}
     .category-button:hover {{
         background: linear-gradient(135deg, #e03426 0%, {SUNSURE_RED} 100%);
-        box-shadow: 0 6px 20px rgba(253,58,32,0.35);
+        box-shadow: 0 8px 25px rgba(253,58,32,0.35);
+        transform: translateY(-2px);
     }}
     .site-section {{
         background: #fff;
@@ -180,6 +185,41 @@ if os.path.exists(img_path):
     }}
     .back-button:hover {{
         background: #5a6268;
+    }}
+    .risk-card {{
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        padding: 1.2rem;
+        margin: 0.8rem 0;
+        border-left: 4px solid;
+    }}
+    .risk-high {{
+        border-left-color: #dc3545;
+        background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);
+    }}
+    .risk-medium {{
+        border-left-color: #ffc107;
+        background: linear-gradient(135deg, #fffdf5 0%, #fff 100%);
+    }}
+    .risk-low {{
+        border-left-color: #28a745;
+        background: linear-gradient(135deg, #f8fff8 0%, #fff 100%);
+    }}
+    .risk-summary-card {{
+        background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+        border: 2px solid #dee2e6;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        text-align: center;
+    }}
+    .mitigation-card {{
+        background: #e8f5e8;
+        border: 1px solid #c3e6c3;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 0.5rem 0;
     }}
     </style>
     """
@@ -442,7 +482,119 @@ def render_site_dashboard(site_name, site_category):
     
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # Section 3: Regulatory Approvals
+    # Section 3: E&S Risks Callout (NEW SECTION)
+    st.markdown('<div class="site-section">', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-header">⚠️ E&S Risks Callout</h3>', unsafe_allow_html=True)
+    
+    # Risk Summary Cards
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown("""
+        <div class="risk-summary-card">
+            <h4 style="color: #dc3545; margin-bottom: 0.5rem;">High Risk</h4>
+            <h2 style="color: #dc3545; margin: 0;">3</h2>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Initial Assessment</p>
+            <p style="margin: 0; color: #28a745; font-size: 0.8rem;"><strong>→ 0 (Post Mitigation)</strong></p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="risk-summary-card">
+            <h4 style="color: #ffc107; margin-bottom: 0.5rem;">Medium Risk</h4>
+            <h2 style="color: #ffc107; margin: 0;">7</h2>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Initial Assessment</p>
+            <p style="margin: 0; color: #28a745; font-size: 0.8rem;"><strong>→ 2 (Post Mitigation)</strong></p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div class="risk-summary-card">
+            <h4 style="color: #28a745; margin-bottom: 0.5rem;">Low Risk</h4>
+            <h2 style="color: #28a745; margin: 0;">12</h2>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Initial Assessment</p>
+            <p style="margin: 0; color: #28a745; font-size: 0.8rem;"><strong>→ 20 (Post Mitigation)</strong></p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Detailed Risk Assessment
+    st.markdown("### High Risk Items & Mitigation Measures", unsafe_allow_html=True)
+    
+    high_risks = [
+        {
+            "risk": "Soil Erosion & Land Degradation",
+            "category": "Environmental",
+            "mitigation": "Implemented terracing, planted cover crops, established drainage systems",
+            "status": "Mitigated → Low Risk"
+        },
+        {
+            "risk": "Community Displacement Impact",
+            "category": "Social",
+            "mitigation": "Developed livelihood restoration plan, established community fund, regular stakeholder meetings",
+            "status": "Mitigated → Low Risk"
+        },
+        {
+            "risk": "Water Table Depletion",
+            "category": "Environmental",
+            "mitigation": "Installed water conservation systems, rainwater harvesting, groundwater monitoring",
+            "status": "Mitigated → Low Risk"
+        }
+    ]
+    
+    for risk in high_risks:
+        st.markdown(f"""
+        <div class="risk-card risk-high">
+            <h5 style="color: #dc3545; margin-bottom: 0.5rem;">🔴 {risk['risk']} ({risk['category']})</h5>
+            <div class="mitigation-card">
+                <strong>Mitigation Measures:</strong> {risk['mitigation']}
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #28a745; font-weight: 600;">✅ {risk['status']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("### Medium Risk Items & Mitigation Measures", unsafe_allow_html=True)
+    
+    medium_risks = [
+        {
+            "risk": "Construction Noise Impact",
+            "mitigation": "Restricted working hours, noise barriers, community notifications",
+            "status": "Mitigated → Low Risk"
+        },
+        {
+            "risk": "Local Air Quality During Construction",
+            "mitigation": "Dust suppression systems, vehicle emission controls, air quality monitoring",
+            "status": "Under Control → Low Risk"  
+        }
+    ]
+    
+    for risk in medium_risks:
+        st.markdown(f"""
+        <div class="risk-card risk-medium">
+            <h5 style="color: #ffc107; margin-bottom: 0.5rem;">🟡 {risk['risk']}</h5>
+            <div class="mitigation-card">
+                <strong>Mitigation Measures:</strong> {risk['mitigation']}
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #28a745; font-weight: 600;">✅ {risk['status']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Risk Trend Chart
+    risk_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+    high_risk_trend = [3, 3, 2, 1, 0, 0]
+    medium_risk_trend = [7, 6, 5, 4, 3, 2]
+    
+    fig_risk = px.line(title=f"Risk Mitigation Progress - {site_name}")
+    fig_risk.add_scatter(x=risk_months, y=high_risk_trend, mode='lines+markers', 
+                        name='High Risk', line_color='#dc3545')
+    fig_risk.add_scatter(x=risk_months, y=medium_risk_trend, mode='lines+markers', 
+                        name='Medium Risk', line_color='#ffc107')
+    fig_risk.update_layout(xaxis_title="Month", yaxis_title="Number of Risks")
+    st.plotly_chart(fig_risk, use_container_width=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Section 4: Regulatory Approvals
     st.markdown('<div class="site-section">', unsafe_allow_html=True)
     st.markdown('<h3 class="section-header">📜 Regulatory Approvals</h3>', unsafe_allow_html=True)
     
@@ -474,7 +626,7 @@ def render_site_dashboard(site_name, site_category):
     
     st.markdown('</div>', unsafe_allow_html=True)
     
-    # Section 4: Grievances
+    # Section 5: Grievances
     st.markdown('<div class="site-section">', unsafe_allow_html=True)
     st.markdown('<h3 class="section-header">📢 Grievances Management</h3>', unsafe_allow_html=True)
     
@@ -532,7 +684,7 @@ def main():
     if st.session_state.page == 'main':
         # Logo
         try:
-            logo = Image.open("Sunsure-Energy_Logo-with-tagline.jpg")
+            logo = Image.open("Sunsure-Energy_Logo-with-tagline.png")
             st.markdown('<div style="text-align: center;">', unsafe_allow_html=True)
             st.image(logo, width=320)
             st.markdown('</div>', unsafe_allow_html=True)
@@ -570,10 +722,10 @@ def main():
         </div>
         """, unsafe_allow_html=True)
         
-        # Site category selection
+        # Site category selection - UPDATED WITH LARGER HEADING AND BIGGER BUTTONS
         st.markdown("""
         <div style="text-align:center; margin: 3rem 0;">
-            <h3 style="color: #0a4635; margin-bottom: 2rem;">Select Site Category</h3>
+            <h2 style="color: #0a4635; margin-bottom: 2.5rem; font-size: 2.2rem; font-weight: 800;">Select Site Category</h2>
         </div>
         """, unsafe_allow_html=True)
         
@@ -581,13 +733,13 @@ def main():
         with col2:
             col_a, col_b = st.columns(2)
             with col_a:
-                if st.button("🔧 O&M Sites", key="om_sites"):
+                if st.button("🔧 O&M Sites", key="om_sites", help="Operations & Maintenance Sites"):
                     st.session_state.site_category = "O&M Sites"
                     st.session_state.page = 'site_selection'
                     st.rerun()
             
             with col_b:
-                if st.button("🏗️ Construction Sites", key="construction_sites"):
+                if st.button("🏗️ Construction Sites", key="construction_sites", help="Under Construction Sites"):
                     st.session_state.site_category = "Construction Sites"
                     st.session_state.page = 'site_selection'
                     st.rerun()
@@ -649,4 +801,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
