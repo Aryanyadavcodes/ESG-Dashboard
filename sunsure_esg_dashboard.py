@@ -593,7 +593,10 @@ def render_site_dashboard(site_name, site_category):
     
     st.markdown("<h4 style='margin-bottom:1.5rem;'>Category-wise Grievances Summary</h4>", unsafe_allow_html=True)
 
-    cat_grievances = [
+    cat_grievances = [ 
+    {   total_grievances = sum(cat["Total"] for cat in cat_grievances)
+        total_resolved = sum(cat["Resolved"] for cat in cat_grievances)
+        total_pending = sum(cat["Pending"] for cat in cat_grievances) },
     {
         "Category": "Employees",
         "Color": "#003865",
@@ -629,6 +632,10 @@ def render_site_dashboard(site_name, site_category):
         <p style='margin:0.10rem 0;color:#198754;font-weight:600;'><b>Resolved:</b> {info['Resolved']}</p>
         <p style='margin:0.10rem 0;color:#fd7e14;font-weight:600;'><b>Pending:</b> {info['Pending']}</p>
         <p style='margin:0.18rem 0 0 0;'><b>Avg Time:</b> {info['AvgTime']}</p>
+        s1, s2, s3 = st.columns(3)
+        s1.markdown(f"<div class='grievance-metric' style='background:#fff;'><h4 style='color:#003865'>Total Grievances</h4><h2>{total_grievances}</h2></div>", unsafe_allow_html=True)
+        s2.markdown(f"<div class='grievance-metric' style='background:#fff;'><h4 style='color:#198754;'>Total Resolved</h4><h2>{total_resolved}</h2></div>", unsafe_allow_html=True)
+        s3.markdown(f"<div class='grievance-metric' style='background:#fff;'><h4 style='color:#fd7e14;'>Total Pending</h4><h2>{total_pending}</h2></div>", unsafe_allow_html=True)
       </div>
       """, unsafe_allow_html=True)
 
@@ -780,6 +787,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
