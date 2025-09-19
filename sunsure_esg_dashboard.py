@@ -544,7 +544,7 @@ def render_site_dashboard(site_name, site_category):
         'Low Risk': [12, 13, 15, 17, 19, 20]
     })
     if st.button("📑 View E&S Risk Register"):
-    st.info("Here you can display or download the E&S Risk Register file, table, or link (functionality to be added).")
+        st.info("Here you can display or download the E&S Risk Register file, table, or link (functionality to be added).")
 
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -755,4 +755,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
