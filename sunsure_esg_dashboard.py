@@ -471,7 +471,7 @@ def render_site_dashboard(site_name, site_category):
     # Show Before/After side by side with Streamlit columns
     col_before, col_arrow, col_after = st.columns([5,1,5])
     
-        st.markdown(
+    st.markdown(
             '''
             <div class="risk-category-item risk-high">
                 <strong style="color: #dc3545;">High Risk: 3</strong>
@@ -721,4 +721,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
