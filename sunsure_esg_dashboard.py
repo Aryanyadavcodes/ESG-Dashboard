@@ -591,19 +591,47 @@ def render_site_dashboard(site_name, site_category):
         'Resolution Date': ['2024-08-20', 'Pending', 'Pending']
     }
     
-    grievances_df = pd.DataFrame(grievances_data)
-    st.dataframe(grievances_df, use_container_width=True, hide_index=True)
-    
-    # Grievance summary
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("Total Grievances", "3", delta="0 this month")
-    with col2:
-        st.metric("Resolved", "1", delta="+1")
-    with col3:
-        st.metric("Average Resolution Time", "5 days", delta="-2 days")
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<h4 style='margin-bottom:1.5rem;'>Category-wise Grievances Summary</h4>", unsafe_allow_html=True)
+
+cat_grievances = [
+    {
+        "Category": "Employees",
+        "Color": "#003865",
+        "Total": 6,
+        "Resolved": 5,
+        "Pending": 1,
+        "AvgTime": "3 days"
+    },
+    {
+        "Category": "Community",
+        "Color": SUNSURE_GREEN,  # "#0a4635"
+        "Total": 8,
+        "Resolved": 6,
+        "Pending": 2,
+        "AvgTime": "5 days"
+    },
+    {
+        "Category": "Workers",
+        "Color": SUNSURE_RED,  # "#fd3a20"
+        "Total": 5,
+        "Resolved": 4,
+        "Pending": 1,
+        "AvgTime": "4 days"
+    },
+]
+
+cols = st.columns(3)
+for i, info in enumerate(cat_grievances):
+    cols[i].markdown(f"""
+    <div class='grievance-metric' style='box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid {info['Color']};margin-bottom:1rem;'>
+        <h3 style='color:{info['Color']};margin-bottom:0.5rem;'>{info['Category']}</h3>
+        <p style='margin:0.15rem 0;font-size:1.15rem;'><b>Total:</b> {info['Total']}</p>
+        <p style='margin:0.10rem 0;color:#198754;font-weight:600;'><b>Resolved:</b> {info['Resolved']}</p>
+        <p style='margin:0.10rem 0;color:#fd7e14;font-weight:600;'><b>Pending:</b> {info['Pending']}</p>
+        <p style='margin:0.18rem 0 0 0;'><b>Avg Time:</b> {info['AvgTime']}</p>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 def render_site_selection(category):
     sites = OM_SITES if category == "O&M Sites" else CONSTRUCTION_SITES
@@ -752,6 +780,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
