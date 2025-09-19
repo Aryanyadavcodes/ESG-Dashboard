@@ -615,7 +615,7 @@ total_resolved = sum(cat["Resolved"] for cat in cat_grievances)
 total_pending = sum(cat["Pending"] for cat in cat_grievances)
 
 # Display overall summary
-   st.markdown("<h4 style='margin-bottom:1rem;'>Overall Summary</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='margin-bottom:1rem;'>Overall Summary</h4>", unsafe_allow_html=True)
    s1, s2, s3 = st.columns(3)
    s1.markdown(f"""
    <div class='grievance-metric' style='background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.09);border-top:5px solid #003865;'>
@@ -639,7 +639,7 @@ total_pending = sum(cat["Pending"] for cat in cat_grievances)
 """, unsafe_allow_html=True)
 
 # Display category-wise breakdown
-   st.markdown("<h4 style='margin-top:2rem;margin-bottom:1.5rem;'>Category-wise Breakdown</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='margin-top:2rem;margin-bottom:1.5rem;'>Category-wise Breakdown</h4>", unsafe_allow_html=True)
    cols = st.columns(3)
    for i, info in enumerate(cat_grievances):
      cols[i].markdown(f"""
@@ -802,6 +802,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
