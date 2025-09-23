@@ -224,7 +224,6 @@ with st.sidebar:
         <div style="background: linear-gradient(135deg, {SUNSURE_RED} 0%, #ff6b54 100%);
                     color: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; text-align: center;">
             <h2 style="margin: 0; font-family: 'Inter', sans-serif;">
-                <img src="sunsure_sidebar_icon.png" style="height:32px;vertical-align:middle;margin-bottom:6px;margin-right:7px;">
                 SUNSURE ENERGY
             </h2>
             <p style="margin: 0.5rem 0 0 0; opacity: 0.9;">ESG Data Upload Portal</p>
@@ -802,6 +801,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
