@@ -456,7 +456,7 @@ def render_site_dashboard(site_name, site_category):
     with col2:
         st.markdown("""
         <div class="consultant-logo-placeholder">
-            <p style="margin: 0; font-size: 0.9rem;">ESIA Consultant Logo</p>
+            <p style="margin: 0; logo = Image.open("Sunsure-Energy_Logo-with-tagline.png")</p>
             <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem;">[Logo would appear here]</p>
         </div>
         """, unsafe_allow_html=True)
@@ -801,6 +801,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
