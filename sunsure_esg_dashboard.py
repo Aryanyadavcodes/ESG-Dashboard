@@ -433,7 +433,7 @@ def render_site_dashboard(site_name, site_category):
     row1_col1, row1_col2 = st.columns(2)
     with row1_col1:
         fig1 = px.line(x=months, y=data1, title="GHG Emissions", height=350)
-        fig1.update_layout(margin=dict(t=35, b=30, r=10, l=10), title_font_size=16, font_size=12)
+        fig1.update_layout(margin=dict(t=35, b=30, r=10, l=10), title_font_size=16, font_size=12, title_x=0.5)
         st.plotly_chart(fig1, use_container_width=True)
     with row1_col2:
         fig2 = px.bar(x=months, y=data2, title="Water Consumption", height=350)
@@ -819,6 +819,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
