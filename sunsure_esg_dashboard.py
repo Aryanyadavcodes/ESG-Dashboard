@@ -723,19 +723,27 @@ def main():
         """, unsafe_allow_html=True)
         
         # Feature cards
-        # Dummy summary numbers - replace with live calculations if needed
-        total_projects = 20
-        total_mw = 650
-        total_ghg = 15800
-        total_energy = 1200000
-        total_diesel = 35000  # or total_waste = xyz if you track this
+        # Example summary data (replace with real values/data as needed)
+        summary_cards = [
+        {"icon":"📁", "headline":"Total Projects", "value": 20, "color": "#0a4635"},
+        {"icon":"⚡", "headline":"Total MW", "value": 650, "color": "#16b696"},
+        {"icon":"🌫️", "headline":"Total GHG Emission (tCO₂e)", "value": 15800, "color": "#fd3a20"},
+        {"icon":"🔋", "headline":"Total Energy Generated (MWh)", "value": "1,200,000", "color":"#003865"},
+        {"icon":"⛽", "headline":"Total Diesel Used (L)", "value": "35,000", "color":"#ff6b54"},]
 
-        m1, m2, m3, m4, m5 = st.columns(5)
-        m1.metric("Total Projects", f"{total_projects}")
-        m2.metric("Total MW", f"{total_mw}")
-        m3.metric("Total GHG Emission (tCO₂e)", f"{total_ghg}")
-        m4.metric("Total Energy Generated (MWh)", f"{total_energy:,}")
-        m5.metric("Total Diesel Used (L)", f"{total_diesel:,}")
+        cols = st.columns(len(summary_cards))
+        for i, card in enumerate(summary_cards):
+            with cols[i]:
+                st.markdown(
+            f"""
+            <div class='sunsure-kpi-card'>
+              <span class="sunsure-kpi-icon" style="background:linear-gradient(135deg,{card['color']},#fff2ee);">{card['icon']}</span>
+              <div class="sunsure-kpi-metric">{card['value']}</div>
+              <div class="sunsure-kpi-desc">{card['headline']}</div>
+            </div>
+            """, unsafe_allow_html=True
+        )
+
         
         # Site category selection
         st.markdown("""
@@ -816,6 +824,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
