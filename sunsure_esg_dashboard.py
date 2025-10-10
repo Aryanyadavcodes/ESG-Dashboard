@@ -423,33 +423,29 @@ def render_site_dashboard(site_name, site_category):
     with col4:
         st.markdown(kpi_card_white("Clean Energy Gen.", "8,500", "MWh"), unsafe_allow_html=True)
     
-    # Monthly trends (demo)
-    months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-    data1 = [20,22,23,24,21,22,19,18,20,23,24,21]
-    data2 = [1200,1100,1150,1300,1250,1200,1150,1200,1300,1350,1250,1300]
-    data3 = [15,13,14,15,16,15,16,14,15,14,15,13]
-    data4 = [320,330,340,325,335,340,330,320,325,330,325,340]
+# QUADRANT LAYOUT: 2 columns in top row, 2 columns in bottom row
+   row1_col1, row1_col2 = st.columns(2)
+   with row1_col1:
+        fig1 = px.line(x=months, y=data1, title="GHG Emissions", height=350)
+        fig1.update_layout(margin=dict(t=35, b=30, r=10, l=10), title_font_size=16, font_size=12)
+        st.plotly_chart(fig1, use_container_width=True)
+   with row1_col2:
+        fig2 = px.bar(x=months, y=data2, title="Water Consumption", height=350)
+        fig2.update_layout(margin=dict(t=35, b=30, r=10, l=10), title_font_size=16, font_size=12)
+        st.plotly_chart(fig2, use_container_width=True)
 
-    colA, colB, colC, colD = st.columns(4)
-    with colA:
-         fig1 = px.line(x=months, y=data1, title="GHG Emissions", height=200)
-         fig1.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
-         st.plotly_chart(fig1, use_container_width=True)
-    with colB:
-         fig2 = px.bar(x=months, y=data2, title="Water Consumption", height=200)
-         fig2.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
-         st.plotly_chart(fig2, use_container_width=True)
-    with colC:
-         fig3 = px.area(x=months, y=data3, title="Diesel Usage", height=200)
-         fig3.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
-         st.plotly_chart(fig3, use_container_width=True)
-    with colD:
-         fig4 = px.line(x=months, y=data4, title="Energy Generated", height=200)
-         fig4.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
-         st.plotly_chart(fig4, use_container_width=True)
+  row2_col1, row2_col2 = st.columns(2)
+  with row2_col1:
+       fig3 = px.area(x=months, y=data3, title="Diesel Usage", height=350)
+       fig3.update_layout(margin=dict(t=35, b=30, r=10, l=10), title_font_size=16, font_size=12)
+       st.plotly_chart(fig3, use_container_width=True)
+  with row2_col2:
+       fig4 = px.line(x=months, y=data4, title="Energy Generated", height=350)
+       fig4.update_layout(margin=dict(t=35, b=30, r=10, l=10), title_font_size=16, font_size=12)
+       st.plotly_chart(fig4, use_container_width=True)
 
-    st.markdown('</div>', unsafe_allow_html=True)
-    
+  st.markdown('</div>', unsafe_allow_html=True)
+
     # Section 2: ESIA Study Status
     st.markdown('<div class="site-section">', unsafe_allow_html=True)
     st.markdown('<h3 class="section-header">📋 ESIA Study Status</h3>', unsafe_allow_html=True)
@@ -817,6 +813,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
