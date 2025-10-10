@@ -734,7 +734,7 @@ def main():
         cols = st.columns(len(summary_cards))
         for i, card in enumerate(summary_cards):
             with cols[i]:
-                st.markdown(
+            st.markdown(
             f"""
             <div class='sunsure-kpi-card'>
               <span class="sunsure-kpi-icon" style="background:linear-gradient(135deg,{card['color']},#fff2ee);">{card['icon']}</span>
@@ -824,6 +824,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
