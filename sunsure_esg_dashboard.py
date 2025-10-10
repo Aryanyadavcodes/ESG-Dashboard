@@ -723,22 +723,19 @@ def main():
         """, unsafe_allow_html=True)
         
         # Feature cards
-        st.markdown("""
-        <div style="display:flex; gap:1.6rem; justify-content:center; margin-bottom:2.5rem;">
-            <div class="feature-card">
-                <h3>🎯 Professional ESG Analytics</h3>
-                <p>Industry-leading ESG metrics tailored for Sunsure Energy's portfolio with comprehensive KPI tracking</p>
-            </div>
-            <div class="feature-card">
-                <h3>🗺️ Multi-State Operations</h3>
-                <p>Track performance across Maharashtra, Uttar Pradesh, and other states with geographic insights</p>
-            </div>
-            <div class="feature-card">
-                <h3>📊 Executive Reporting</h3>
-                <p>Boardroom-ready dashboards and reports for Sunsure leadership and stakeholder presentations</p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # Dummy summary numbers - replace with live calculations if needed
+        total_projects = 20
+        total_mw = 650
+        total_ghg = 15800
+        total_energy = 1200000
+        total_diesel = 35000  # or total_waste = xyz if you track this
+
+        m1, m2, m3, m4, m5 = st.columns(5)
+        m1.metric("Total Projects", f"{total_projects}")
+        m2.metric("Total MW", f"{total_mw}")
+        m3.metric("Total GHG Emission (tCO₂e)", f"{total_ghg}")
+        m4.metric("Total Energy Generated (MWh)", f"{total_energy:,}")
+        m5.metric("Total Diesel Used (L)", f"{total_diesel:,}")
         
         # Site category selection
         st.markdown("""
@@ -819,6 +816,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
