@@ -780,7 +780,7 @@ def main():
         {"icon":"📁", "headline":"Total Projects", "value": 20, "color": "#0a4635"},
         {"icon":"⚡", "headline":"Total MW", "value": 650, "color": "#16b696"},
         {"icon":"🌫️", "headline":"Total GHG Emission (tCO₂e)", "value": 15800, "color": "#fd3a20"},
-        {"icon":"🔋", "headline":"Total Energy Generated (MWh)", "value": "1,200,000", "color":"#003865"},
+        {"icon":"🔋", "headline":"Total Energy Generated (MWh)", "value": "1,200", "color":"#003865"},
         {"icon":"⛽", "headline":"Total Diesel Used (L)", "value": "35,000", "color":"#ff6b54"},]
 
         cols = st.columns(len(summary_cards))
@@ -875,6 +875,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
