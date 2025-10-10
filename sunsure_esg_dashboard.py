@@ -432,21 +432,21 @@ def render_site_dashboard(site_name, site_category):
 
     colA, colB, colC, colD = st.columns(4)
     with colA:
-    fig1 = px.line(x=months, y=data1, title="GHG Emissions", height=200)
-    fig1.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
-    st.plotly_chart(fig1, use_container_width=True)
+         fig1 = px.line(x=months, y=data1, title="GHG Emissions", height=200)
+         fig1.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
+         st.plotly_chart(fig1, use_container_width=True)
     with colB:
-    fig2 = px.bar(x=months, y=data2, title="Water Consumption", height=200)
-    fig2.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
-    st.plotly_chart(fig2, use_container_width=True)
+         fig2 = px.bar(x=months, y=data2, title="Water Consumption", height=200)
+         fig2.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
+         st.plotly_chart(fig2, use_container_width=True)
     with colC:
-    fig3 = px.area(x=months, y=data3, title="Diesel Usage", height=200)
-    fig3.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
-    st.plotly_chart(fig3, use_container_width=True)
+         fig3 = px.area(x=months, y=data3, title="Diesel Usage", height=200)
+         fig3.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
+         st.plotly_chart(fig3, use_container_width=True)
     with colD:
-    fig4 = px.line(x=months, y=data4, title="Energy Generated", height=200)
-    fig4.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
-    st.plotly_chart(fig4, use_container_width=True)
+         fig4 = px.line(x=months, y=data4, title="Energy Generated", height=200)
+         fig4.update_layout(margin=dict(t=30, b=20, r=0, l=0), title_font_size=12, font_size=11)
+         st.plotly_chart(fig4, use_container_width=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -817,6 +817,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
