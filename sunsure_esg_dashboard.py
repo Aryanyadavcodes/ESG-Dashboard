@@ -411,6 +411,12 @@ def render_site_dashboard(site_name, site_category):
     # Section 1: GHG Data
     st.markdown('<div class="site-section">', unsafe_allow_html=True)
     st.markdown('<h3 class="section-header">🌍 GHG Data & Environmental Metrics</h3>', unsafe_allow_html=True)
+
+    months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    data1 = [20,22,23,24,21,22,19,18,20,23,24,21]
+    data2 = [1200,1100,1150,1300,1250,1200,1150,1200,1300,1350,1250,1300]
+    data3 = [15,13,14,15,16,15,16,14,15,14,15,13]
+    data4 = [320,330,340,325,335,340,330,320,325,330,325,340]
     
     # Demo GHG KPIs for the site
     col1, col2, col3, col4 = st.columns(4)
@@ -813,6 +819,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
