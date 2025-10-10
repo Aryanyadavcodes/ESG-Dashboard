@@ -721,6 +721,58 @@ def main():
             </p>
         </div>
         """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <style>
+        .sunsure-kpi-card {
+        background: #fff;
+        border-radius: 18px;
+        border: 2.5px solid #0a4635;
+        box-shadow: 0 2.5px 12px rgba(10,70,53,0.13);
+        padding: 1.8rem 1rem 1.4rem 1rem;
+        text-align: center;
+        min-width: 140px;
+        margin-bottom: 0;
+        margin-top: 18px;
+        transition: box-shadow 0.19s;
+        position: relative;
+}
+        .sunsure-kpi-metric {
+        font-size: 2.15rem;
+        color: #fd3a20;
+        font-weight: 850;
+        letter-spacing: 0.02em;
+        margin-bottom: 0.4rem;
+        margin-top: 0.1rem;
+}
+        .sunsure-kpi-desc {
+        color: #0a4635;
+        font-size: 1.07rem;
+        font-weight: 600;
+        margin-top: 0.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+}
+        .sunsure-kpi-icon {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -28px;
+        font-size: 2.0rem;
+        background: linear-gradient(135deg,#0a4635,#fd3a20);
+        color: #fff;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border:3px solid #fff;
+        box-shadow: 0 3px 9px rgba(10,70,53,0.10);
+}
+        </style>
+        """, unsafe_allow_html=True)
+
         
         # Feature cards
         # Example summary data (replace with real values/data as needed)
@@ -734,14 +786,13 @@ def main():
         cols = st.columns(len(summary_cards))
         for i, card in enumerate(summary_cards):
             with cols[i]:
-            st.markdown(
-            f"""
-            <div class='sunsure-kpi-card'>
+             st.markdown(f"""
+             <div class='sunsure-kpi-card'>
               <span class="sunsure-kpi-icon" style="background:linear-gradient(135deg,{card['color']},#fff2ee);">{card['icon']}</span>
               <div class="sunsure-kpi-metric">{card['value']}</div>
               <div class="sunsure-kpi-desc">{card['headline']}</div>
-            </div>
-            """, unsafe_allow_html=True
+             </div>
+             """, unsafe_allow_html=True
         )
 
         
@@ -824,6 +875,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
